@@ -1,0 +1,202 @@
+<title>Amplifica · Caso de Negocio para Postulantes</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Plataforma en línea del caso de negocio para el proceso de selección de Encargado(a) de Finanzas de Amplifica." />
+<link rel="stylesheet" href="assets/css/style.css" />
+
+<header class="site-header">
+  <div class="brand-row">
+    <div class="brand">
+      <h1>AMPLIFICA</h1>
+      <p>Caso de Negocio · Encargado(a) de Finanzas — Cierre de Mes y Forecast</p>
+    </div>
+    <div id="timer-bar">
+      <span>⏱</span>
+      <span id="timer-texto">01:30:00</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="steps">
+    <span class="step-pill" id="pill-1">1. Tus datos</span>
+    <span class="step-pill" id="pill-2">2. Instrucciones</span>
+    <span class="step-pill" id="pill-3">3. Prueba en curso</span>
+    <span class="step-pill" id="pill-4">4. Entrega</span>
+  </div>
+
+  <!-- PASO 1: REGISTRO -->
+  <section id="registro" class="card">
+    <h2>Antes de comenzar</h2>
+    <p>Completa tus datos para iniciar la prueba. El tiempo estimado es de <strong>1,5 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba".</p>
+    <div class="grid-2">
+      <div class="form-field">
+        <label for="input-nombre">Nombre completo</label>
+        <input type="text" id="input-nombre" placeholder="Ej: María Pérez" autocomplete="name" />
+      </div>
+      <div class="form-field">
+        <label for="input-email">Correo electrónico</label>
+        <input type="email" id="input-email" placeholder="tu@correo.com" autocomplete="email" />
+      </div>
+    </div>
+    <button class="btn" id="btn-comenzar">Comenzar prueba →</button>
+    <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Por favor completa tu nombre y un correo válido.</p>
+  </section>
+
+  <!-- CONTENIDO DEL CASO (oculto hasta comenzar) -->
+  <div id="contenido-caso" class="hidden">
+
+    <section class="card">
+      <h2>1. Contexto: qué es Amplifica</h2>
+      <p>Amplifica es un operador logístico (fulfillment) para marcas de e-commerce. Almacenamos el stock de nuestros sellers, preparamos sus pedidos y coordinamos el despacho de última milla a través de distintos couriers. En la data del caso encontrarás la información de esos couriers; parte del ejercicio es reconocer qué datos vienen del courier y qué datos vienen de nuestro sistema.</p>
+      <p>Nuestro modelo de negocio combina varias fuentes de ingreso por cada seller: una comisión por el servicio de fulfillment, el cobro del despacho al seller, el almacenaje (en UF por m³) y servicios adicionales (etiquetado, cajas, retiros, furgón, etc.).</p>
+      <div class="callout">
+        <strong>Punto clave:</strong> los couriers cobran según peso volumétrico y zona/comuna, por lo que el valor sube con el tamaño del envío y la distancia. Como conocemos el peso y volumen de cada producto, podemos calcular la tarifa que un pedido debería tener. La prefactura del courier no siempre coincide con eso.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Tu rol y el objetivo</h2>
+      <p>Buscamos a la persona que liderará el cierre de mes y las proyecciones financieras. La meta del cargo es mantener una desviación máxima de <strong>5%</strong> entre forecast y resultado real; hoy estamos lejos de eso.</p>
+      <p>Nos interesa tanto el resultado como, sobre todo, tu forma de pensar: cómo ordenas el trabajo, qué cuestionas, cómo detectas errores y cómo justificas tus supuestos.</p>
+    </section>
+
+    <section class="card">
+      <h2>3. Cómo cobramos a los sellers</h2>
+      <p>Existen distintos modelos de cobro y cada seller tiene el suyo. El detalle por seller está en el archivo de datos (pestañas «Perfil_Sellers» y «Perfil_Plan_Tarifa»). A modo de glosario general:</p>
+      <table class="glosario">
+        <thead>
+          <tr><th>Modelo</th><th>Qué significa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Comisión % sobre venta</td><td>Cobramos un porcentaje del valor de cada venta del seller.</td></tr>
+          <tr><td>Cobro por pedido</td><td>Monto fijo por cada pedido preparado y despachado.</td></tr>
+          <tr><td>Plan Starter</td><td>Una base mensual en UF que cubre hasta cierto número de pedidos; sobre ese tope se cobra un extra por pedido.</td></tr>
+          <tr><td>Tramos por valor (B2C)</td><td>El cobro por pedido depende del monto de la venta: distintos valores según el ticket.</td></tr>
+        </tbody>
+      </table>
+      <p style="font-style: italic; color: var(--texto-suave);">A esto se suman el margen de despacho, el almacenaje y los servicios adicionales, según corresponda a cada seller.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. Los datos que recibes</h2>
+      <p>Trabajarás con el mes de <strong>Junio 2026</strong>. La UF de cierre es <strong>39.500</strong>. Toda la información está en un solo archivo, «Amplifica_Caso_Datos.xlsx», con una pestaña de índice y estas secciones:</p>
+      <table class="glosario">
+        <thead>
+          <tr><th>Sección</th><th>Contenido</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Despachos_Sistema</td><td>Lo que deberíamos cobrar por cada pedido (peso, tarifa de contrato, cobro al seller).</td></tr>
+          <tr><td>Prefacturas_Couriers + Tarifas_Netas</td><td>Lo que factura cada courier terrestre y las tarifas de contrato para reconciliar.</td></tr>
+          <tr><td>Envios_Express</td><td>Envíos express same-day.</td></tr>
+          <tr><td>Pedidos_Ventas</td><td>Pedidos con monto de venta por canal (para comisiones).</td></tr>
+          <tr><td>Perfil_Sellers / Plan_Tarifa / Almacenaje / Recurrentes</td><td>Condiciones comerciales de cada seller.</td></tr>
+          <tr><td>Adic_… (Etiquetado, Cajas, Furgón, Grúa, Retiros)</td><td>Cobros adicionales del mes.</td></tr>
+          <tr><td>Historico_12m</td><td>Serie mensual para construir el forecast.</td></tr>
+        </tbody>
+      </table>
+      <div class="descarga-box">
+        <a class="btn dorado" href="assets/files/Amplifica_Caso_Datos.xlsx" download>⬇ Descargar Amplifica_Caso_Datos.xlsx</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5. Parte A — Cierre de mes (Junio 2026)</h2>
+      <h3>Tareas</h3>
+      <ol>
+        <li>Reconcilia la prefactura de cada courier contra los despachos del sistema. Identifica y cuantifica las diferencias: ¿nos están cobrando lo que corresponde?</li>
+        <li>Arma el cierre por seller: cuánto se le cobra a cada uno, aplicando su modelo comercial, el despacho, el almacenaje y los servicios adicionales.</li>
+        <li>Cuestiona lo que no cuadre. Revisa los datos con criterio, toma supuestos cuando lo estimes conveniente para que la información haga sentido, y propón cómo abordarías las inconsistencias que encuentres. Deja registro de lo que ajustaste, excluiste o asumiste.</li>
+        <li>Consolida el resultado del mes: cuánto le facturamos a los sellers (incluyendo el cobro por despacho), cuánto debemos pagar realmente a los couriers, y las diferencias que surjan de tu revisión.</li>
+      </ol>
+      <div class="callout">
+        Contrasta siempre la información: no des por hecho que las prefacturas de los couriers ni las planillas de adicionales están correctas. Compáralas con lo que el sistema y las condiciones comerciales indican, y saca tus propias conclusiones.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Parte B — Forecast (Jul – Dic 2026)</h2>
+      <p>A partir del cierre de Junio y de la serie histórica, proyecta los próximos 6 meses. La meta es una desviación promedio ≤ 5% frente al resultado real.</p>
+      <h3>Qué esperamos que consideres</h3>
+      <ul>
+        <li>Tendencia y crecimiento de pedidos, distinguiendo señal de ruido.</li>
+        <li>Estacionalidad (eventos comerciales que se repiten).</li>
+        <li>Altas y bajas de sellers durante el periodo.</li>
+        <li>Que buena parte de los ingresos fijos están en UF.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>7. Qué entregar</h2>
+      <p>Tu respuesta es un informe breve con tus conclusiones, respaldado por un Excel con tus cálculos.</p>
+      <h3>1) Informe</h3>
+      <p>Un documento corto (Word, PDF o slides) que incluya: un resumen del cierre del mes, los hallazgos de tu revisión y cómo los abordaste (qué ajustaste, excluiste o asumiste), tu forecast Jul–Dic 2026, y los supuestos y metodología que usaste.</p>
+      <h3>2) Excel de respaldo</h3>
+      <p>El Excel con el detalle de tus cálculos: la reconciliación de couriers, el cierre por seller y el forecast. Puedes usar «Plantilla_Respuesta_Candidato.xlsx» como base.</p>
+      <div class="descarga-box">
+        <a class="btn dorado" href="assets/files/Plantilla_Respuesta_Candidato.xlsx" download>⬇ Descargar Plantilla_Respuesta_Candidato.xlsx</a>
+      </div>
+      <h3>Requisitos</h3>
+      <ul>
+        <li>El Excel debe mostrar tus fórmulas (que se vean los cálculos), no solo los valores finales.</li>
+        <li>Explica tus decisiones y supuestos con tus propias palabras.</li>
+        <li>Si algo te parece dudoso, es válido dejarlo señalado como hallazgo en vez de forzar un número.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>8. Criterios de evaluación</h2>
+      <table class="glosario">
+        <thead>
+          <tr><th>Dimensión</th><th>Peso</th><th>Qué miramos</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reconciliación de couriers</td><td>20%</td><td>Detecta y cuantifica los errores de cobro.</td></tr>
+          <tr><td>Cierre por seller</td><td>20%</td><td>Aplica bien cada modelo, almacenaje y margen.</td></tr>
+          <tr><td>Detección de costos sin sentido</td><td>15%</td><td>Cuestiona lo anómalo y lo dimensiona.</td></tr>
+          <tr><td>Tratamiento de casos borde</td><td>10%</td><td>Ej.: sellers dados de baja con pedidos posteriores.</td></tr>
+          <tr><td>Calidad del forecast</td><td>20%</td><td>Desviación ≤ 5% y modelado de eventos.</td></tr>
+          <tr><td>Razonamiento y comunicación</td><td>15%</td><td>Orden, priorización, claridad y uso de fórmulas.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>9. Reglas</h2>
+      <ul>
+        <li>Tiempo estimado: 1,5 horas. Usa Excel/Sheets y las fórmulas que quieras.</li>
+        <li>Si un dato falta o es ambiguo, documenta tu supuesto y sigue: preferimos ver criterio.</li>
+        <li>Puede haber una breve conversación posterior para que expliques tu trabajo.</li>
+      </ul>
+    </section>
+
+    <!-- PASO 4: ENTREGA -->
+    <section class="card" id="entrega">
+      <h2>10. Entrega tu respuesta</h2>
+      <p>Cuando termines, sube <strong>ambos archivos</strong> (informe y Excel de respaldo) a la carpeta de Drive del proceso.</p>
+      <div class="callout">
+        <strong>Nombra tus archivos así:</strong> <code>Nombre_Apellido_Informe</code> y <code>Nombre_Apellido_Excel</code>, para que podamos identificar tu entrega.
+      </div>
+      <div class="descarga-box">
+        <a class="btn" id="link-drive" href="https://drive.google.com/drive/folders/1q0j1o2hU329LOYTcryxGfIMNdgaTR1zG?usp=drive_link" target="_blank" rel="noopener">📤 Subir mis archivos a Drive</a>
+      </div>
+
+      <ul class="checklist">
+        <li><input type="checkbox" id="chk-informe" /> <label for="chk-informe">Subí mi informe (Word, PDF o slides)</label></li>
+        <li><input type="checkbox" id="chk-excel" /> <label for="chk-excel">Subí mi Excel de respaldo con fórmulas visibles</label></li>
+        <li><input type="checkbox" id="chk-nombre" /> <label for="chk-nombre">Nombré los archivos con mi nombre completo</label></li>
+      </ul>
+
+      <button class="btn secundario" id="btn-confirmar-envio" disabled>Confirmar que ya envié mis archivos</button>
+      <div id="confirmacion-envio" class="confirmacion hidden">
+        ✅ ¡Listo! Registramos que completaste la entrega. Gracias por tu tiempo — el equipo de Amplifica revisará tu caso y podría contactarte para una breve conversación sobre tu trabajo.
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  Amplifica — Proceso de selección · Encargado(a) de Finanzas. Ante dudas sobre el caso, contacta a tu reclutador(a).
+</footer>
+
+<script src="assets/js/app.js"></script>
