@@ -45,7 +45,7 @@ Sin configurar nada, la plataforma funciona igual que antes (registro local por 
 1. Crea una Google Sheet nueva (en el Drive de `matias@amplifica.io` o el que prefieras administrar).
 2. Ve a **Extensiones → Apps Script**.
 3. Borra el contenido de `Code.gs` que aparece por defecto y pega el contenido de [`apps-script/Code.gs`](apps-script/Code.gs) de este repo.
-4. En la constante `CORREOS_ADMIN_AUTORIZADOS`, agrega los correos de Google que podrán ver el panel (ya incluye `matias@amplifica.io`).
+4. En la constante `CORREOS_ADMIN_AUTORIZADOS`, agrega los correos de Google que podrán ver el panel (ya incluye `matias@amplifica.io` y `olivia@amplifica.io`).
 5. Guarda y ve a **Implementar → Nueva implementación**.
    - Tipo: **Aplicación web**.
    - Ejecutar como: **Yo**.
@@ -69,3 +69,7 @@ window.AMPLIFICA_CONFIG = {
 ```
 
 Con eso, `index.html` empieza a registrar automáticamente cada inicio y entrega en la Sheet, y `admin.html` muestra la tabla de postulantes (nombre, correo, hora de inicio, si entregó y tiempo utilizado) solo a los correos autorizados.
+
+### Reiniciar el intento de un postulante
+
+En `admin.html`, cada fila tiene un botón **"↺ Reiniciar"**. Al confirmarlo, la próxima vez que ese correo abra `index.html` en su navegador, la plataforma detecta el reinicio, borra su progreso local (cronómetro, checklist, entrega) y vuelve a mostrarle el formulario de registro para que empiece de cero. Si el postulante ya tiene la pestaña abierta en ese momento, el reinicio se aplica la próxima vez que recargue o vuelva a entrar.

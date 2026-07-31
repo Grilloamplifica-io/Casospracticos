@@ -219,6 +219,21 @@
     registrarEvento("inicio", estado);
   });
 
+  function verificarReinicioRemoto(estado) {
+    if (!APPS_SCRIPT_URL || !estado.email) return;
+    fetch(APPS_SCRIPT_URL + "?accion=comprobarReset&email=" + encodeURIComponent(estado.email) + "&desde=" + estado.inicio)
+      .then(function (resp) { return resp.json(); })
+      .then(function (data) {
+        if (data && data.ok && data.reiniciado) {
+          localStorage.removeItem(STORAGE_KEY);
+          location.reload();
+        }
+      })
+      .catch(function () {
+        /* si falla la comprobación, el candidato sigue con su intento actual */
+      });
+  }
+
   // Al cargar la página, si ya existe una prueba en curso para este navegador, se retoma.
   (function inicializar() {
     var estado = leerEstado();
@@ -227,6 +242,7 @@
       elInputEmail.value = estado.email || "";
       mostrarContenido(estado);
       restaurarChecklist(estado);
+      verificarReinicioRemoto(estado);
     } else {
       marcarPill(1, "activo");
     }

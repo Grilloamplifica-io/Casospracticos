@@ -10,11 +10,23 @@
 var SHEET_NAME = "Postulantes";
 
 // Correos autorizados para ver el panel de administración.
-var CORREOS_ADMIN_AUTORIZADOS = ["matias@amplifica.io"];
+var CORREOS_ADMIN_AUTORIZADOS = ["matias@amplifica.io", "olivia@amplifica.io"];
 
 function doPost(e) {
-  var sheet = obtenerHoja_();
   var datos = JSON.parse(e.postData.contents);
+
+  // Reiniciar el intento de un postulante es una acción de administración:
+  // exige un ID token válido de un correo autorizado.
+  if (datos.evento === "reiniciar") {
+    var correoAdmin = verificarIdToken_(datos.idToken);
+    if (!correoAdmin || CORREOS_ADMIN_AUTORIZADOS.indexOf(correoAdmin) === -1) {
+      return ContentService.createTextOutput(
+        JSON.stringify({ ok: false, error: "No autorizado" })
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  var sheet = obtenerHoja_();
   sheet.appendRow([
     new Date(),
     datos.evento || "",
@@ -29,6 +41,12 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  // La propia plataforma consulta esto (sin login) para saber si un admin
+  // reinició su intento y debe volver a empezar desde cero.
+  if (e.parameter.accion === "comprobarReset") {
+    return comprobarReset_(e);
+  }
+
   var idToken = e.parameter.idToken;
   var correo = verificarIdToken_(idToken);
 
@@ -53,6 +71,29 @@ function doGet(e) {
 
   return ContentService.createTextOutput(
     JSON.stringify({ ok: true, filas: filas })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+function comprobarReset_(e) {
+  var email = (e.parameter.email || "").toLowerCase();
+  var desde = Number(e.parameter.desde || 0);
+  var reiniciado = false;
+
+  if (email) {
+    var sheet = obtenerHoja_();
+    var valores = sheet.getDataRange().getValues();
+    for (var i = 1; i < valores.length; i++) {
+      var fila = valores[i];
+      var esReinicio = fila[1] === "reiniciar" && (fila[3] || "").toString().toLowerCase() === email;
+      if (esReinicio && new Date(fila[0]).getTime() > desde) {
+        reiniciado = true;
+        break;
+      }
+    }
+  }
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ ok: true, reiniciado: reiniciado })
   ).setMimeType(ContentService.MimeType.JSON);
 }
 

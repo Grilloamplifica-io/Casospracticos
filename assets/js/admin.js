@@ -73,11 +73,53 @@
           "<td>" + escapeHtml_(r.email || "—") + "</td>" +
           "<td>" + formatoFechaLegible(r.inicio) + "</td>" +
           "<td>" + (r.entregado ? "✅ Sí" : "⏳ No") + "</td>" +
-          "<td>" + formatoDuracion(inicioMs, enviadoMs) + "</td>";
+          "<td>" + formatoDuracion(inicioMs, enviadoMs) + "</td>" +
+          "<td></td>";
+        var celdaAccion = tr.lastElementChild;
+        var btnReiniciar = document.createElement("button");
+        btnReiniciar.type = "button";
+        btnReiniciar.className = "btn secundario";
+        btnReiniciar.style.padding = "0.4rem 0.8rem";
+        btnReiniciar.style.fontSize = "0.85rem";
+        btnReiniciar.textContent = "↺ Reiniciar";
+        btnReiniciar.addEventListener("click", function () {
+          reiniciarCandidato_(r, btnReiniciar);
+        });
+        celdaAccion.appendChild(btnReiniciar);
         elCuerpoTabla.appendChild(tr);
       });
     elDatosInfo.textContent = registros.length + " postulante(s) registrados.";
     elDatosInfo.classList.remove("hidden");
+  }
+
+  function reiniciarCandidato_(registro, boton) {
+    var confirmado = window.confirm(
+      "¿Reiniciar el intento de " + (registro.nombre || registro.email) + "? " +
+      "Podrá volver a comenzar la prueba desde cero la próxima vez que entre a la página."
+    );
+    if (!confirmado) return;
+
+    boton.disabled = true;
+    boton.textContent = "Reiniciando...";
+
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        evento: "reiniciar",
+        nombre: registro.nombre,
+        email: registro.email,
+        idToken: idTokenActual,
+      }),
+    })
+      .then(function () {
+        boton.textContent = "✅ Reiniciado";
+      })
+      .catch(function () {
+        boton.disabled = false;
+        boton.textContent = "↺ Reiniciar";
+        window.alert("No se pudo reiniciar. Intenta de nuevo.");
+      });
   }
 
   function escapeHtml_(texto) {
