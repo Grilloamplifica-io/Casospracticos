@@ -12,6 +12,10 @@ var SHEET_NAME = "Postulantes";
 // Correos autorizados para ver el panel de administración.
 var CORREOS_ADMIN_AUTORIZADOS = ["matias@amplifica.io", "olivia@amplifica.io"];
 
+// Carpeta de Drive donde se crea una subcarpeta individual por postulante.
+// Es el ID de la carpeta del enlace https://drive.google.com/drive/folders/<ID>.
+var CARPETA_ENTREGAS_ID = "1q0j1o2hU329LOYTcryxGfIMNdgaTR1zG";
+
 function doPost(e) {
   var datos = JSON.parse(e.postData.contents);
 
@@ -45,6 +49,12 @@ function doGet(e) {
   // reinició su intento y debe volver a empezar desde cero.
   if (e.parameter.accion === "comprobarReset") {
     return comprobarReset_(e);
+  }
+
+  // La propia plataforma consulta esto (sin login) para obtener/crear la
+  // subcarpeta de Drive individual del postulante.
+  if (e.parameter.accion === "obtenerCarpeta") {
+    return obtenerCarpetaCandidato_(e);
   }
 
   var idToken = e.parameter.idToken;
@@ -95,6 +105,38 @@ function comprobarReset_(e) {
   return ContentService.createTextOutput(
     JSON.stringify({ ok: true, reiniciado: reiniciado })
   ).setMimeType(ContentService.MimeType.JSON);
+}
+
+function obtenerCarpetaCandidato_(e) {
+  var email = (e.parameter.email || "").trim();
+  var nombre = (e.parameter.nombre || "").trim();
+
+  if (!email) {
+    return ContentService.createTextOutput(
+      JSON.stringify({ ok: false, error: "Falta email" })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var nombreCarpeta = (nombre ? nombre + " - " : "") + email;
+
+  try {
+    var carpetaPadre = DriveApp.getFolderById(CARPETA_ENTREGAS_ID);
+    var existentes = carpetaPadre.getFoldersByName(nombreCarpeta);
+    var carpeta = existentes.hasNext() ? existentes.next() : null;
+
+    if (!carpeta) {
+      carpeta = carpetaPadre.createFolder(nombreCarpeta);
+      carpeta.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.EDIT);
+    }
+
+    return ContentService.createTextOutput(
+      JSON.stringify({ ok: true, url: carpeta.getUrl() })
+    ).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(
+      JSON.stringify({ ok: false, error: String(err) })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 function verificarIdToken_(idToken) {

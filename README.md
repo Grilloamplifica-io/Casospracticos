@@ -31,10 +31,16 @@ El cronómetro y el checklist se guardan en `localStorage` del navegador, así q
 
 ## Carpeta de entrega (Google Drive)
 
-El botón "Subir mis archivos a Drive" apunta a:
+El botón "Subir mis archivos a Drive" apunta por defecto a la carpeta general del proceso:
 https://drive.google.com/drive/folders/1q0j1o2hU329LOYTcryxGfIMNdgaTR1zG?usp=drive_link
 
-Verifica que el permiso de la carpeta sea "Cualquier persona con el enlace puede subir archivos" (o editor) para que los postulantes puedan cargar sus archivos sin necesitar acceso previo.
+Verifica que el permiso de esa carpeta sea "Cualquier persona con el enlace puede subir archivos" (o editor).
+
+### Subcarpeta individual por postulante
+
+Si el backend de Apps Script está configurado (ver "Panel de administración" abajo), cada vez que un postulante comienza la prueba, la plataforma le pide a `Code.gs` una subcarpeta propia dentro de esa carpeta general (nombrada "Nombre - correo@ejemplo.com"), la crea si no existe con permiso de edición para cualquiera con el enlace, y reemplaza el botón de Drive por el enlace a esa subcarpeta — así cada postulante solo ve y sube a su propia carpeta, no a una compartida entre todos.
+
+Esto requiere que `Code.gs` tenga permiso sobre Google Drive. La primera vez que se implemente esta versión, Google va a pedir autorizar el nuevo alcance (Drive) además del de Sheets.
 
 ## Panel de administración (opcional)
 

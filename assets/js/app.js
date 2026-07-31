@@ -141,6 +141,26 @@
       marcarPill(4, null);
     }
     iniciarCronometro(estado.inicio);
+    actualizarEnlaceDrive(estado);
+  }
+
+  function actualizarEnlaceDrive(estado) {
+    var elLinkDrive = $("link-drive");
+    if (!elLinkDrive || !APPS_SCRIPT_URL || !estado.email) return;
+    fetch(
+      APPS_SCRIPT_URL +
+        "?accion=obtenerCarpeta&email=" + encodeURIComponent(estado.email) +
+        "&nombre=" + encodeURIComponent(estado.nombre || "")
+    )
+      .then(function (resp) { return resp.json(); })
+      .then(function (data) {
+        if (data && data.ok && data.url) {
+          elLinkDrive.href = data.url;
+        }
+      })
+      .catch(function () {
+        /* si falla, se mantiene el enlace de la carpeta general del proceso */
+      });
   }
 
   function restaurarChecklist(estado) {
