@@ -15,12 +15,26 @@ Sitio estático para el caso de negocio del proceso de selección de **Encargado
 
 ## Flujo para el postulante
 
-1. Ingresa nombre y correo y presiona "Comenzar prueba" (arranca el cronómetro de 2 horas; al agotarse, la página se bloquea automáticamente).
+1. Ingresa su **RUT** y presiona "Comenzar prueba" (arranca el cronómetro de 2 horas; al agotarse, la página se bloquea automáticamente). Solo los RUT de la lista `CANDIDATOS_AUTORIZADOS` en `assets/js/config.js` pueden iniciar.
 2. Lee el enunciado completo y descarga los dos Excel.
 3. Resuelve el caso fuera de la plataforma (Excel/Sheets).
 4. Sube su informe y su Excel de respaldo a la carpeta de Drive del proceso y marca la casilla de confirmación.
 
-El cronómetro y el checklist se guardan en `localStorage` del navegador, así que si el postulante recarga la página no pierde el progreso ni reinicia el tiempo.
+El cronómetro y el checklist se guardan en `localStorage` del navegador, así que si el postulante recarga la página no pierde el progreso ni reinicia el tiempo. Al cumplirse las 2 horas, la página se bloquea automáticamente: el botón de subir a Drive queda deshabilitado y solo queda disponible la opción de enviar los archivos por correo a `olivia@amplifica.io`.
+
+### Agregar o quitar postulantes autorizados
+
+En `assets/js/config.js`, edita la lista `CANDIDATOS_AUTORIZADOS`:
+
+```js
+CANDIDATOS_AUTORIZADOS: [
+  { nombre: "Rodrigo Rioz", rut: "20.072.535-2" },
+  { nombre: "Joaquín Riveros", rut: "18.395.975-1" },
+  { nombre: "Camila Marín", rut: "17.253.754-5" },
+],
+```
+
+El postulante puede escribir su RUT con o sin puntos/guion — se compara solo por los dígitos y el dígito verificador.
 
 ## Publicar en GitHub Pages
 
@@ -68,4 +82,4 @@ window.AMPLIFICA_CONFIG = {
 };
 ```
 
-Con eso, `index.html` empieza a registrar automáticamente cada inicio y entrega en la Sheet, y `admin.html` muestra la tabla de postulantes (nombre, correo, hora de inicio, si entregó y tiempo utilizado) solo a los correos autorizados.
+Con eso, `index.html` empieza a registrar automáticamente cada inicio y entrega en la Sheet, y `admin.html` muestra la tabla de postulantes (nombre, RUT, hora de inicio, si entregó y tiempo utilizado) solo a los correos de Google autorizados.

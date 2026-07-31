@@ -15,7 +15,7 @@
         body: JSON.stringify({
           evento: evento,
           nombre: estado.nombre,
-          email: estado.email,
+          rut: estado.rut,
           inicio: estado.inicio,
           enviadoTs: estado.enviadoTs || "",
         }),
@@ -33,9 +33,9 @@
   var elTimerBar = $("timer-bar");
   var elTimerTexto = $("timer-texto");
   var elBtnComenzar = $("btn-comenzar");
-  var elInputNombre = $("input-nombre");
-  var elInputEmail = $("input-email");
+  var elInputRut = $("input-rut");
   var elRegistroError = $("registro-error");
+  var CANDIDATOS_AUTORIZADOS = (window.AMPLIFICA_CONFIG && window.AMPLIFICA_CONFIG.CANDIDATOS_AUTORIZADOS) || [];
 
   var elChkInforme = $("chk-informe");
   var elChkExcel = $("chk-excel");
@@ -67,8 +67,19 @@
     }
   }
 
-  function emailValido(valor) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+  function normalizarRut(rut) {
+    return (rut || "").toString().toUpperCase().replace(/[^0-9K]/g, "");
+  }
+
+  function buscarCandidatoPorRut(rutIngresado) {
+    var normalizado = normalizarRut(rutIngresado);
+    if (!normalizado) return null;
+    for (var i = 0; i < CANDIDATOS_AUTORIZADOS.length; i++) {
+      if (normalizarRut(CANDIDATOS_AUTORIZADOS[i].rut) === normalizado) {
+        return CANDIDATOS_AUTORIZADOS[i];
+      }
+    }
+    return null;
   }
 
   function marcarPill(numero, clase) {
@@ -198,18 +209,18 @@
   });
 
   elBtnComenzar.addEventListener("click", function () {
-    var nombre = elInputNombre.value.trim();
-    var email = elInputEmail.value.trim();
+    var rutIngresado = elInputRut.value.trim();
+    var candidato = buscarCandidatoPorRut(rutIngresado);
 
-    if (!nombre || !emailValido(email)) {
+    if (!candidato) {
       elRegistroError.classList.remove("hidden");
       return;
     }
     elRegistroError.classList.add("hidden");
 
     var estado = {
-      nombre: nombre,
-      email: email,
+      nombre: candidato.nombre,
+      rut: candidato.rut,
       inicio: Date.now(),
       enviado: false,
       checklist: { informe: false, excel: false, nombre: false },
@@ -223,8 +234,7 @@
   (function inicializar() {
     var estado = leerEstado();
     if (estado && estado.inicio) {
-      elInputNombre.value = estado.nombre || "";
-      elInputEmail.value = estado.email || "";
+      elInputRut.value = estado.rut || "";
       mostrarContenido(estado);
       restaurarChecklist(estado);
     } else {

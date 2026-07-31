@@ -28,31 +28,24 @@
   <!-- PASO 1: REGISTRO -->
   <section id="registro" class="card">
     <h2>Antes de comenzar</h2>
-    <p>Completa tus datos para iniciar la prueba. Tienes un máximo de <strong>2 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba". Al cumplirse las 2 horas, la prueba se cierra automáticamente.</p>
-    <div class="grid-2">
-      <div class="form-field">
-        <label for="input-nombre">Nombre completo</label>
-        <input type="text" id="input-nombre" placeholder="Ej: María Pérez" autocomplete="name" />
-      </div>
-      <div class="form-field">
-        <label for="input-email">Correo electrónico</label>
-        <input type="email" id="input-email" placeholder="tu@correo.com" autocomplete="email" />
-      </div>
+    <p>Ingresa tu RUT para iniciar la prueba. Tienes un máximo de <strong>2 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba". Al cumplirse las 2 horas, la prueba se cierra automáticamente.</p>
+    <div class="form-field">
+      <label for="input-rut">RUT</label>
+      <input type="text" id="input-rut" placeholder="Ej: 12.345.678-9" autocomplete="off" />
     </div>
     <button class="btn" id="btn-comenzar">Comenzar prueba →</button>
-    <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Por favor completa tu nombre y un correo válido.</p>
+    <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Ese RUT no está autorizado para rendir esta prueba. Verifica el formato o contacta a tu reclutador(a).</p>
   </section>
 
   <!-- PANTALLA DE BLOQUEO POR TIEMPO AGOTADO -->
   <section id="bloqueo-tiempo" class="card hidden">
     <h2>⏱ Tiempo finalizado</h2>
     <p>Se cumplieron las <strong>2 horas</strong> máximas para esta prueba, así que la página se cerró y ya no puedes seguir viendo ni editando el caso.</p>
-    <p>Si ya tenías tus archivos listos, igual puedes subirlos a la carpeta de Drive del proceso:</p>
     <div class="descarga-box">
-      <a class="btn" href="https://drive.google.com/drive/folders/1q0j1o2hU329LOYTcryxGfIMNdgaTR1zG?usp=drive_link" target="_blank" rel="noopener">📤 Subir mis archivos a Drive</a>
+      <span class="btn" style="opacity:0.5; cursor:not-allowed; pointer-events:none;" aria-disabled="true">🚫 Subir a Drive (bloqueado, tiempo agotado)</span>
     </div>
     <div class="callout">
-      Alternativamente, puedes enviar tu informe y tu Excel de respaldo por correo a <strong>olivia@amplifica.io</strong>.
+      Ya no puedes subir tus archivos a la carpeta de Drive. Envía tu informe y tu Excel de respaldo por correo a <strong>olivia@amplifica.io</strong>.
     </div>
     <p style="color: var(--texto-suave);">Ante cualquier duda, contacta a tu reclutador(a).</p>
   </section>

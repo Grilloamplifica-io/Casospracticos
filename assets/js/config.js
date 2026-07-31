@@ -9,4 +9,13 @@ window.AMPLIFICA_CONFIG = {
   // Client ID de OAuth de Google Cloud (Credentials → OAuth client ID → Web application),
   // usado únicamente por admin.html para el botón de inicio de sesión con Google.
   GOOGLE_CLIENT_ID: "162346621751-n09na6d9npiup2fdo2t2jtu8drpqfh3a.apps.googleusercontent.com",
+
+  // Postulantes autorizados a rendir la prueba. El RUT es la clave de acceso:
+  // solo quien ingrese un RUT de esta lista puede comenzar. Agrega o quita
+  // candidatos aquí, en el formato que prefieras (con o sin puntos).
+  CANDIDATOS_AUTORIZADOS: [
+    { nombre: "Rodrigo Rioz", rut: "20.072.535-2" },
+    { nombre: "Joaquín Riveros", rut: "18.395.975-1" },
+    { nombre: "Camila Marín", rut: "17.253.754-5" },
+  ],
 };

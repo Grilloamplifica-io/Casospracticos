@@ -19,7 +19,7 @@ function doPost(e) {
     new Date(),
     datos.evento || "",
     datos.nombre || "",
-    datos.email || "",
+    datos.rut || "",
     datos.inicio ? new Date(Number(datos.inicio)) : "",
     datos.enviadoTs ? new Date(Number(datos.enviadoTs)) : "",
   ]);
@@ -45,7 +45,7 @@ function doGet(e) {
       marcaTemporal: fila[0],
       evento: fila[1],
       nombre: fila[2],
-      email: fila[3],
+      rut: fila[3],
       inicio: fila[4],
       enviado: fila[5],
     };
@@ -77,7 +77,7 @@ function obtenerHoja_() {
   var hoja = libro.getSheetByName(SHEET_NAME);
   if (!hoja) {
     hoja = libro.insertSheet(SHEET_NAME);
-    hoja.appendRow(["Marca temporal", "Evento", "Nombre", "Correo", "Inicio", "Enviado"]);
+    hoja.appendRow(["Marca temporal", "Evento", "Nombre", "RUT", "Inicio", "Enviado"]);
   }
   return hoja;
 }
