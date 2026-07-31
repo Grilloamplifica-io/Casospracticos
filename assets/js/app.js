@@ -3,6 +3,27 @@
 
   var DURACION_SEGUNDOS = 90 * 60; // 1,5 horas
   var STORAGE_KEY = "amplifica_caso_finanzas_estado";
+  var APPS_SCRIPT_URL = (window.AMPLIFICA_CONFIG && window.AMPLIFICA_CONFIG.APPS_SCRIPT_URL) || "";
+
+  function registrarEvento(evento, estado) {
+    if (!APPS_SCRIPT_URL) return; // sin backend configurado, no se registra nada
+    try {
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          evento: evento,
+          nombre: estado.nombre,
+          email: estado.email,
+          inicio: estado.inicio,
+          enviadoTs: estado.enviadoTs || "",
+        }),
+      });
+    } catch (e) {
+      /* si falla el registro remoto, la prueba del candidato sigue funcionando igual */
+    }
+  }
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -157,6 +178,7 @@
     elConfirmacionEnvio.classList.remove("hidden");
     marcarPill(3, "hecho");
     marcarPill(4, "hecho");
+    registrarEvento("entrega", estado);
   });
 
   elBtnComenzar.addEventListener("click", function () {
@@ -178,6 +200,7 @@
     };
     guardarEstado(estado);
     mostrarContenido(estado);
+    registrarEvento("inicio", estado);
   });
 
   // Al cargar la página, si ya existe una prueba en curso para este navegador, se retoma.

@@ -1,0 +1,57 @@
+<title>Amplifica · Panel interno de postulantes</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<header class="site-header">
+  <div class="brand-row">
+    <div class="brand">
+      <h1>AMPLIFICA</h1>
+      <p>Panel interno — Postulantes al caso de Finanzas</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="card" id="tarjeta-config-faltante">
+    <h2>Panel no configurado</h2>
+    <p>Falta completar <code>assets/js/config.js</code> con <code>APPS_SCRIPT_URL</code> y <code>GOOGLE_CLIENT_ID</code>. Revisa el README, sección "Panel de administración".</p>
+  </section>
+
+  <section class="card hidden" id="tarjeta-login">
+    <h2>Iniciar sesión</h2>
+    <p>Ingresa con tu cuenta de Google autorizada para ver el estado de los postulantes.</p>
+    <div id="boton-google"></div>
+    <p id="login-error" class="hidden" style="color:var(--rojo); font-weight:600;">No autorizado con esa cuenta.</p>
+  </section>
+
+  <section class="card hidden" id="tarjeta-datos">
+    <h2>Postulantes</h2>
+    <p id="datos-info" class="hidden" style="color:var(--texto-suave);"></p>
+    <div style="overflow-x:auto;">
+      <table class="glosario" id="tabla-postulantes">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Inicio</th>
+            <th>Entregó</th>
+            <th>Tiempo utilizado</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <button class="btn secundario" id="btn-refrescar" style="margin-top:1rem;">↻ Refrescar</button>
+  </section>
+</main>
+
+<footer>
+  Amplifica — Panel interno. Acceso restringido.
+  <br /><a href="index.html">Volver a la plataforma de postulantes</a>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/admin.js"></script>
