@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var DURACION_SEGUNDOS = 90 * 60; // 1,5 horas
+  var DURACION_SEGUNDOS = 2 * 60 * 60; // 2 horas máximo
   var STORAGE_KEY = "amplifica_caso_finanzas_estado";
   var APPS_SCRIPT_URL = (window.AMPLIFICA_CONFIG && window.AMPLIFICA_CONFIG.APPS_SCRIPT_URL) || "";
 
@@ -29,6 +29,7 @@
 
   var elRegistro = $("registro");
   var elContenido = $("contenido-caso");
+  var elBloqueoTiempo = $("bloqueo-tiempo");
   var elTimerBar = $("timer-bar");
   var elTimerTexto = $("timer-texto");
   var elBtnComenzar = $("btn-comenzar");
@@ -88,6 +89,18 @@
 
   var intervaloTimer = null;
 
+  function tiempoExpirado(startTs) {
+    return (Date.now() - startTs) / 1000 >= DURACION_SEGUNDOS;
+  }
+
+  function bloquearPorTiempo() {
+    if (intervaloTimer) clearInterval(intervaloTimer);
+    elTimerBar.classList.remove("visible");
+    elRegistro.classList.add("hidden");
+    elContenido.classList.add("hidden");
+    elBloqueoTiempo.classList.remove("hidden");
+  }
+
   function iniciarCronometro(startTs) {
     elTimerBar.classList.add("visible");
 
@@ -97,9 +110,8 @@
 
       elTimerBar.classList.remove("warning", "expired");
       if (restante <= 0) {
-        elTimerTexto.textContent = "Tiempo finalizado";
-        elTimerBar.classList.add("expired");
         clearInterval(intervaloTimer);
+        bloquearPorTiempo();
         return;
       }
       if (restante <= 15 * 60) {
@@ -113,6 +125,10 @@
   }
 
   function mostrarContenido(estado) {
+    if (tiempoExpirado(estado.inicio)) {
+      bloquearPorTiempo();
+      return;
+    }
     elRegistro.classList.add("hidden");
     elContenido.classList.remove("hidden");
     marcarPill(1, "hecho");

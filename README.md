@@ -6,7 +6,7 @@ Sitio estático para el caso de negocio del proceso de selección de **Encargado
 
 - `index.html` — página única con el enunciado del caso, descarga de archivos y entrega.
 - `assets/css/style.css` — estilos.
-- `assets/js/app.js` — registro del postulante, cronómetro de 1,5 horas persistente y checklist de entrega.
+- `assets/js/app.js` — registro del postulante, cronómetro de 2 horas persistente (con cierre automático de la página al agotarse) y checklist de entrega.
 - `assets/files/Amplifica_Caso_Datos.xlsx` — data del caso, descargable desde la página.
 - `assets/files/Plantilla_Respuesta_Candidato.xlsx` — plantilla de respuesta, descargable desde la página.
 - `assets/js/config.js` — URLs/IDs del backend opcional (panel de administración).
@@ -15,7 +15,7 @@ Sitio estático para el caso de negocio del proceso de selección de **Encargado
 
 ## Flujo para el postulante
 
-1. Ingresa nombre y correo y presiona "Comenzar prueba" (arranca el cronómetro de 1,5 horas).
+1. Ingresa nombre y correo y presiona "Comenzar prueba" (arranca el cronómetro de 2 horas; al agotarse, la página se bloquea automáticamente).
 2. Lee el enunciado completo y descarga los dos Excel.
 3. Resuelve el caso fuera de la plataforma (Excel/Sheets).
 4. Sube su informe y su Excel de respaldo a la carpeta de Drive del proceso y marca la casilla de confirmación.

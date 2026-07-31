@@ -12,7 +12,7 @@
     </div>
     <div id="timer-bar">
       <span>⏱</span>
-      <span id="timer-texto">01:30:00</span>
+      <span id="timer-texto">02:00:00</span>
     </div>
   </div>
 </header>
@@ -28,7 +28,7 @@
   <!-- PASO 1: REGISTRO -->
   <section id="registro" class="card">
     <h2>Antes de comenzar</h2>
-    <p>Completa tus datos para iniciar la prueba. El tiempo estimado es de <strong>1,5 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba".</p>
+    <p>Completa tus datos para iniciar la prueba. Tienes un máximo de <strong>2 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba". Al cumplirse las 2 horas, la prueba se cierra automáticamente.</p>
     <div class="grid-2">
       <div class="form-field">
         <label for="input-nombre">Nombre completo</label>
@@ -41,6 +41,17 @@
     </div>
     <button class="btn" id="btn-comenzar">Comenzar prueba →</button>
     <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Por favor completa tu nombre y un correo válido.</p>
+  </section>
+
+  <!-- PANTALLA DE BLOQUEO POR TIEMPO AGOTADO -->
+  <section id="bloqueo-tiempo" class="card hidden">
+    <h2>⏱ Tiempo finalizado</h2>
+    <p>Se cumplieron las <strong>2 horas</strong> máximas para esta prueba, así que la página se cerró y ya no puedes seguir viendo ni editando el caso.</p>
+    <p>Si ya tenías tus archivos listos, igual puedes subirlos a la carpeta de Drive del proceso:</p>
+    <div class="descarga-box">
+      <a class="btn" href="https://drive.google.com/drive/folders/1q0j1o2hU329LOYTcryxGfIMNdgaTR1zG?usp=drive_link" target="_blank" rel="noopener">📤 Subir mis archivos a Drive</a>
+    </div>
+    <p style="color: var(--texto-suave);">Ante cualquier duda, contacta a tu reclutador(a).</p>
   </section>
 
   <!-- CONTENIDO DEL CASO (oculto hasta comenzar) -->
