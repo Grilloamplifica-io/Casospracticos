@@ -4,7 +4,7 @@ window.AMPLIFICA_CONFIG = {
   // URL del Web App de Google Apps Script (termina en /exec). Déjalo vacío
   // ("") para deshabilitar el registro en Sheets y el panel de administración.
   APPS_SCRIPT_URL:
-    "https://script.google.com/macros/s/AKfycbxvB0PIjOlT4R8rqE4eWbH4uQWdkk4Xdx_gyAv-kf7M94QbQ7eaBfLpzm-1DrzApWBWaA/exec",
+    "https://script.google.com/macros/s/AKfycbxk17dOw239185PhkZ79CU7MhBBW1SlQkuYvZuIeq3JIcV1gmw_EIXvMAEawz3V29LfaA/exec",
 
   // Client ID de OAuth de Google Cloud (Credentials → OAuth client ID → Web application),
   // usado únicamente por admin.html para el botón de inicio de sesión con Google.
