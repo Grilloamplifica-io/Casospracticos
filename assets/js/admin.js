@@ -40,15 +40,15 @@
     return (horas > 0 ? horas + "h " : "") + min + "min";
   }
 
-  function agruparPorRut(filas) {
+  function agruparPorCorreo(filas) {
     var mapa = {};
     filas.forEach(function (fila) {
-      var rut = fila.rut;
-      if (!rut) return;
-      if (!mapa[rut]) {
-        mapa[rut] = { nombre: fila.nombre, rut: rut, inicio: null, entregado: false, enviado: null };
+      var email = fila.email;
+      if (!email) return;
+      if (!mapa[email]) {
+        mapa[email] = { nombre: fila.nombre, email: email, inicio: null, entregado: false, enviado: null };
       }
-      var registro = mapa[rut];
+      var registro = mapa[email];
       if (fila.nombre) registro.nombre = fila.nombre;
       if (fila.inicio && !registro.inicio) registro.inicio = fila.inicio;
       if (fila.evento === "entrega") {
@@ -57,7 +57,7 @@
         if (fila.inicio) registro.inicio = fila.inicio;
       }
     });
-    return Object.keys(mapa).map(function (rut) { return mapa[rut]; });
+    return Object.keys(mapa).map(function (email) { return mapa[email]; });
   }
 
   function renderizarTabla(registros) {
@@ -70,7 +70,7 @@
         var enviadoMs = r.enviado ? new Date(r.enviado).getTime() : null;
         tr.innerHTML =
           "<td>" + escapeHtml_(r.nombre || "—") + "</td>" +
-          "<td>" + escapeHtml_(r.rut || "—") + "</td>" +
+          "<td>" + escapeHtml_(r.email || "—") + "</td>" +
           "<td>" + formatoFechaLegible(r.inicio) + "</td>" +
           "<td>" + (r.entregado ? "✅ Sí" : "⏳ No") + "</td>" +
           "<td>" + formatoDuracion(inicioMs, enviadoMs) + "</td>";
@@ -102,7 +102,7 @@
         elLoginError.classList.add("hidden");
         elLogin.classList.add("hidden");
         elDatos.classList.remove("hidden");
-        renderizarTabla(agruparPorRut(data.filas || []));
+        renderizarTabla(agruparPorCorreo(data.filas || []));
       })
       .catch(function () {
         elDatosInfo.textContent = "No se pudo conectar con el backend. Intenta de nuevo.";

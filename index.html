@@ -28,13 +28,19 @@
   <!-- PASO 1: REGISTRO -->
   <section id="registro" class="card">
     <h2>Antes de comenzar</h2>
-    <p>Ingresa tu RUT para iniciar la prueba. Tienes un máximo de <strong>2 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba". Al cumplirse las 2 horas, la prueba se cierra automáticamente.</p>
-    <div class="form-field">
-      <label for="input-rut">RUT</label>
-      <input type="text" id="input-rut" placeholder="Ej: 12.345.678-9" autocomplete="off" />
+    <p>Completa tus datos para iniciar la prueba. Tienes un máximo de <strong>2 horas</strong> y el cronómetro comienza apenas presionas "Comenzar prueba". Al cumplirse las 2 horas, la prueba se cierra automáticamente.</p>
+    <div class="grid-2">
+      <div class="form-field">
+        <label for="input-nombre">Nombre completo</label>
+        <input type="text" id="input-nombre" placeholder="Ej: María Pérez" autocomplete="name" />
+      </div>
+      <div class="form-field">
+        <label for="input-email">Correo electrónico</label>
+        <input type="email" id="input-email" placeholder="tu@correo.com" autocomplete="email" />
+      </div>
     </div>
     <button class="btn" id="btn-comenzar">Comenzar prueba →</button>
-    <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Ese RUT no está autorizado para rendir esta prueba. Verifica el formato o contacta a tu reclutador(a).</p>
+    <p id="registro-error" class="hidden" style="color:var(--rojo); font-weight:600;">Por favor completa tu nombre y un correo válido.</p>
   </section>
 
   <!-- PANTALLA DE BLOQUEO POR TIEMPO AGOTADO -->
